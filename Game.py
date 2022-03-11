@@ -19,6 +19,7 @@ class Game:
         self.black_rating = raw_data["black"]["rating"]
         self.white_result = raw_data["white"]["result"]
         self.black_result = raw_data["black"]["result"]
+        self.timeclass = raw_data["time_class"]
         self.uuid = raw_data["uuid"]
         self.pgn  = self.process_pgn(raw_data["pgn"])
 
@@ -28,8 +29,8 @@ class Game:
         print(self.pgn)
     
     def export_as_dataframe(self):
-        return pd.DataFrame([[self.uuid, self.timestamp, self.white_player, self.black_player, self.white_rating, self.black_rating, self.white_result, self.black_result, self.pgn]],
-                   columns=['uuid', 'timestamp','white_player', 'black_player', 'white_rating', 'black_rating', 'white_result', 'black_result', 'pgn'])
+        return pd.DataFrame([[self.uuid, self.timestamp, self.white_player, self.black_player, self.timeclass, self.white_rating, self.black_rating, self.white_result, self.black_result, self.pgn]],
+                   columns=['uuid', 'timestamp','white_player', 'black_player', 'timeclass', 'white_rating', 'black_rating', 'white_result', 'black_result', 'pgn'])
 
 
 
