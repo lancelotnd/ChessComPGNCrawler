@@ -22,13 +22,17 @@ def main():
     while len(collected_players) < args.limit:
         username  = queue.pop()
         print(f"Now fetching games of {username}")
-        fetch_games(username)
-        collected_players.append(username)
-        print(f"Fetched all games of {username}, now adding all {username}'s adversaries to the queue.")
-        list_other_players = extract_usernames_set(username.lower())
-        for player in list_other_players:
-            if player not in queue and player not in collected_players:
-                queue.append(player)
+
+        try:
+            fetch_games(username)
+            collected_players.append(username)
+            print(f"Fetched all games of {username}, now adding all {username}'s adversaries to the queue.")
+            list_other_players = extract_usernames_set(username.lower())
+            for player in list_other_players:
+                if player not in queue and player not in collected_players:
+                    queue.append(player)
+        except:
+            print(f"An exception has occured when trying to collect games from {username}. Moving on.")
 
 
 def extract_usernames_set(filename):
