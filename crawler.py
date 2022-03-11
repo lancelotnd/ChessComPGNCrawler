@@ -9,12 +9,19 @@ def fetch_games(username):
 
     archives = r.json()["archives"]
     list_df = []
-
+    count_games =0
     for month in tqdm(archives):
         archive_of_month = requests.get(month).json()
         for element in tqdm(archive_of_month["games"]):
-            game = Game(element)
-            list_df.append(game.export_as_dataframe())
+            if element["time_class"] == "rapid":
+                game = Game(element)
+                list_df.append(game.export_as_dataframe())
+                count_games +=1
+                if count_games >= 100:
+                    break
+
+        if count_games >= 100:
+            break
 
     df = pd.concat(list_df)
     df.to_csv(f"games/{username.lower()}.csv", index=False)
